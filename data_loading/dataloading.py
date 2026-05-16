@@ -37,7 +37,7 @@ def dataloaders(dataset_dir, batch_size=32, train_size=0.7, val_size=0.15):
                                 transform=train_transform)
     test_set = datasets.ImageFolder(root=dataset_dir, 
                                 transform=test_transform)
-    
+    class_names = train_set.classes
     #splitting the sets
     total = len(train_set)
     indices = list(range(total))
@@ -65,8 +65,8 @@ def dataloaders(dataset_dir, batch_size=32, train_size=0.7, val_size=0.15):
     for classes in range(len(class_counts)):
         class_weight = (class_counts.sum()) / (len(class_counts) * class_counts[classes])
         class_weights.append(class_weight)
-    class_weights = torch.tensor(class_weights)
-    return train_loader, val_loader, test_loader, class_weights
+    class_weights = torch.FloatTensor(class_weights)
+    return train_loader, val_loader, test_loader, class_weights, class_names
 
 
 
