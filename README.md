@@ -200,7 +200,3 @@ Potential improvements identified during this project, ordered by expected impac
 ## Acknowledgments
 
 Dataset by [Samith Sachidanandan on Kaggle](https://www.kaggle.com/datasets/samithsachidanandan/human-face-emotions).
-
-## License
-
-[Add license here]
