@@ -1,5 +1,5 @@
 ## Author: Aalam Sultanji
-## Last updated: 15-05-2026
+## Last updated: 29-05-2026
 ## Email: aalam.sultanji@gmail.com
 
 '''
@@ -17,6 +17,7 @@ import torchvision.transforms as transforms
 from model.CNN import CNN1
 from train_test.train_test import train, evaluate, test
 from data_loading.dataloading import dataloaders
+import numpy as np
 
 '''
 Main block, runs the training and testing of the model, includes the configurations. 
@@ -28,7 +29,12 @@ BATCH_SIZE = 32
 EPOCHS = 50
 LEARNING_RATE = 0.001
 NUM_CLASSES = 5
+SEED = 42
 
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
 if __name__ == "__main__":
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     train_loader, val_loader, test_loader, class_weights, class_names = dataloaders(DATADIR, batch_size=BATCH_SIZE)
