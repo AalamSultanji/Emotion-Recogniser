@@ -1,5 +1,5 @@
 ## Author: Aalam Sultanji
-## Last updated: 14-05-2026
+## Last updated: 29-05-2026
 ## Email: aalam.sultanji@gmail.com
 
 '''
@@ -21,7 +21,6 @@ def dataloaders(dataset_dir, batch_size=32, train_size=0.7, val_size=0.15):
     train_transform=transforms.Compose([
         transforms.Resize((128, 128)),
         transforms.Grayscale(num_output_channels=1),
-        #augmentation later
         transforms.ToTensor(),
         transforms.Normalize(mean = [0.5], std = [0.5])
     ])
@@ -55,9 +54,12 @@ def dataloaders(dataset_dir, batch_size=32, train_size=0.7, val_size=0.15):
     test_split = Subset(test_set, test_index)
 
     #creating the dataloaders
-    train_loader = DataLoader(train_split, batch_size=batch_size, shuffle=True)
-    val_loader = DataLoader(val_split, batch_size=batch_size, shuffle=False)
-    test_loader = DataLoader(test_split, batch_size=batch_size, shuffle=False)
+    train_loader = DataLoader(train_split, batch_size=batch_size, shuffle=True,
+                              num_workers=4, pin_memory=True, persistent_workers=True)
+    val_loader = DataLoader(val_split, batch_size=batch_size, shuffle=False,
+                            num_workers=4, pin_memory=True, persistent_workers=True)
+    test_loader = DataLoader(test_split, batch_size=batch_size, shuffle=False,
+                             num_workers=4, pin_memory=True, persistent_workers=True)
 
     #computing the class weights for imbalanced data
     class_counts = np.bincount(np.array(train_set.targets)[train_index])
